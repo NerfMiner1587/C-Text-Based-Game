@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+
+
+void BattleSim();
+
+//global variable
+int playerHealth = 100;
+
+int main() {
+	srand(time(NULL));
+	int room = 1;
+	char input;
+	while (playerHealth > 0) {
+		switch (room) {
+		case 1:
+			cout << "you're in room 1, you can go (s)outh" << endl;
+			cin >> input;
+			if (input == 's')
+				room = 2;
+			break;
+		case 2:
+			BattleSim();
+			cout << "you're in room 2, you can go (s)outh or (n)orth" << endl;
+			cin >> input;
+			if (input == 's')
+				room = 3;
+			else if (input == 'n')
+				room = 1;
+			break;
+		case 3:
+			cout << "you're in room 3, you can go (n)orth" << endl;
+			cin >> input;
+			if (input == 'n')
+				room = 2;
+			break;
+
+		}
+	}
+	if (playerHealth <= 0)
+		cout << endl << endl << endl << endl << "-------------------------------------GAME OVER------------------------------------" << endl << endl << endl << endl << endl;
+}//end main
+
+void BattleSim() {
+	int MonsterHealth = 200;
+	int damage;
+	char dummy;
+	cout << endl << endl << "------------------MONSTER BATTLE----------------------" << endl << endl;
+	cout << "an ogre attacks!" << endl;
+	while (playerHealth > 0 && MonsterHealth > 0) {
+		//player's attack
+		damage = rand() % 11+5;
+		cout << "you hit the monster for " << damage << " damage." << endl;
+		MonsterHealth -= damage;
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+
+
+		//monster attack
+		damage = rand() % 21 + 40;
+		cout << "the monster hits you for " << damage << " damage." << endl;
+		playerHealth -= damage;
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+
+
+		if (playerHealth > 0)
+			cout << "Your health = " << playerHealth << endl;
+		else
+			cout << "You died." << endl;
+
+		if (MonsterHealth > 0)
+			cout << "Monster health = " << MonsterHealth << endl;
+		else
+			cout << "You killed the monster!!!" << endl;
+		cout << "press any key to continue..." << endl;
+		cin >> dummy;
+	}
+	cout << "---------------------------end of battle----------------------------------" << endl << endl;
+}
